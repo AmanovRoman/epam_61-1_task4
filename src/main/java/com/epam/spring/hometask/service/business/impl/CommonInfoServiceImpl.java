@@ -19,7 +19,7 @@ public class CommonInfoServiceImpl implements CommonInfoServiceDao {
     }
 
     public CommonInformation findByEventId(int eventId) {
-        return commonInfo.getById(eventId);
+        return commonInfo.getByEvent(eventId);
     }
 
     public int increaseAccessedByName(CommonInformation info) {

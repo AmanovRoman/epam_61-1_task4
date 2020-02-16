@@ -21,8 +21,6 @@ public class EventServiceDaoImpl implements EventServiceDao {
     @Autowired
     private UserServiceDao userService;
 
-    public EventServiceDaoImpl() {
-    }
 
     public Event getEventById(int eventId) {
         return eventDao.getById(eventId);
