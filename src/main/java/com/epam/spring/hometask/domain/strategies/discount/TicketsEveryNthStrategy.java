@@ -16,36 +16,22 @@ public class TicketsEveryNthStrategy extends AbstractStrategy implements Discoun
     public TicketsEveryNthStrategy(@Value("${discount.tickets.everyNth.value}") double discountValue) {
         super(discountValue, "Every Nth ticket discount");
     }
-
+    @Override
     public double calculate(User user, ScheduledEvents scheduler, int ticketsAmount, Ticket ticket) {
         this.setUser(user);
         return ticket.getId() % this.condition == 0 ? this.getDiscountValue() : -1.0D;
     }
-
+    @Override
     public String getDiscountTitle() {
         return this.getStrategyName();
     }
-
+    @Override
     public double getDiscountValue() {
         return super.getDiscountValue();
     }
-
+    @Override
     public User getLastUser() {
         return this.getUser();
     }
 
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        } else if (!(o instanceof TicketsEveryNthStrategy)) {
-            return false;
-        } else {
-            TicketsEveryNthStrategy that = (TicketsEveryNthStrategy) o;
-            return this.getStrategyName().equals(that.getStrategyName());
-        }
-    }
-
-    public int hashCode() {
-        return Objects.hash(this.getStrategyName());
-    }
 }

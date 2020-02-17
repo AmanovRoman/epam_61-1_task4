@@ -9,9 +9,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public interface TicketServiceDao {
-    List<Ticket> bookTickets(int var1, int var2, Set<Integer> var3);
+    List<Ticket> bookTickets(int scheduledId, int userId, Set<Integer> seats);
 
-    Ticket getTicketById(int var1);
+    Ticket getTicketById(int ticketId);
 
     List<Ticket> getAllSoldTickets();
 
@@ -31,13 +31,13 @@ public interface TicketServiceDao {
         return filterTicketsByScheduled(getAllSoldTickets(), scheduledId);
     }
 
-    List<Ticket> filterTicketsByEvent(List<Ticket> var1, int var2);
+    List<Ticket> filterTicketsByEvent(List<Ticket> tickets, int eventId);
 
     default List<Ticket> filterTicketsByUser(List<Ticket> tickets, int userId) {
         return tickets.stream().filter((ticket) -> ticket.getUserId() == userId).collect(Collectors.toList());
     }
 
-    List<Ticket> filterTicketsByTime(List<Ticket> var1, LocalDateTime var2);
+    List<Ticket> filterTicketsByTime(List<Ticket> tickets, LocalDateTime dateTime);
 
     default List filterTicketsByScheduled(List<Ticket> tickets, int scheduledId) {
         return tickets.stream().filter(ticket -> ticket.getScheduledEventId() == scheduledId).collect(Collectors.toList());
@@ -51,7 +51,7 @@ public interface TicketServiceDao {
         return tickets.stream().mapToDouble(Ticket::getPrice).sum();
     }
 
-    Ticket calculateTicketPrice(Ticket var1, int var2);
+    Ticket calculateTicketPrice(Ticket ticket, int ticketsAmount);
 
     default double round(double value, int places) {
         if (places < 0) {

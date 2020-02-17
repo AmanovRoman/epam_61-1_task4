@@ -14,36 +14,43 @@ public class CommonInfoServiceImpl implements CommonInfoServiceDao {
     @Autowired
     CommonInfoDao commonInfo;
 
+    @Override
     public int saveInfo(CommonInformation info) {
         return this.commonInfo.save(info);
     }
 
+    @Override
     public CommonInformation findByEventId(int eventId) {
         return commonInfo.getByEvent(eventId);
     }
 
+    @Override
     public int increaseAccessedByName(CommonInformation info) {
         info.setAccessedByNameCounter(info.getAccessedByNameCounter() + 1);
         commonInfo.update(info);
         return info.getAccessedByNameCounter();
     }
 
+    @Override
     public int increasePriceQueried(CommonInformation info) {
         info.setPriceQueriedCounter(info.getPriceQueriedCounter() + 1);
         commonInfo.update(info);
         return info.getPriceQueriedCounter();
     }
 
+    @Override
     public int increaseTicketBooked(CommonInformation info) {
         info.setTicketsBookedCounter(info.getTicketsBookedCounter() + 1);
         commonInfo.update(info);
         return info.getTicketsBookedCounter();
     }
 
+    @Override
     public List<CommonInformation> getAllCommonInformation() {
         return commonInfo.getAll();
     }
 
+    @Override
     public String getTextInfo(List<CommonInformation> list) {
         return null;
     }

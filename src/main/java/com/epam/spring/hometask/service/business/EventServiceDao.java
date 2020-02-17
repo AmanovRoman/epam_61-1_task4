@@ -5,7 +5,7 @@ import com.epam.spring.hometask.domain.User;
 import java.util.List;
 
 public interface EventServiceDao {
-    Event getEventById(int id);
+    Event getEventById(int eventId);
 
     Event getEventByName(String name);
 
@@ -13,5 +13,5 @@ public interface EventServiceDao {
 
     int addNewEvent(Event event, User user);
 
-    int addNewEvent(String name, double cost, int var4, int var5);
+    int addNewEvent(String name, double basePrice, int eventRating, int userId);
 }

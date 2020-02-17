@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Set;
 
 public interface AuditoriumServiceDao {
-    Auditorium getAuditoriumById(int var1);
+    Auditorium getAuditoriumById(int auditoriumId);
 
     List<Auditorium> getAllAuditoriums();
 
-    Set<Integer> getSeats(int var1, List<Integer> var2);
+    Set<Integer> getSeats(int auditoriumId, List<Integer> seatsNumbers);
 
-    int addNewAuditorium(String var1, Integer var2, Set<Integer> var3, Double var4);
+    int addNewAuditorium(String name, Integer totalSeats, Set<Integer> vipSeats, Double vipCostMultiplier);
 
-    int addNewAuditorium(Auditorium var1);
+    int addNewAuditorium(Auditorium auditorium);
 }

@@ -12,25 +12,30 @@ public class DiscountInfoServiceImpl implements DiscountInfoServiceDao {
     @Autowired
     DiscountInfoDao discountInfo;
 
+    @Override
     public int saveInfo(DiscountInformation info) {
         return discountInfo.save(info);
     }
 
+    @Override
     public List<DiscountInformation> findByUserId(int userId) {
         return discountInfo.getByUserId(userId);
     }
 
+    @Override
     public List<DiscountInformation> findByStrategyName(String name) {
         return discountInfo.getByDiscountName(name);
     }
 
+    @Override
     public int increaseCounter(DiscountInformation info) {
         info.setUserDiscountCounter(info.getUserDiscountCounter()+1);
         discountInfo.update(info);
         return info.getUserDiscountCounter();
     }
 
-    public String getTextInfo(List<DiscountInformation> list) {
+    @Override
+    public String getTextInfo() {
         return null;
     }
 }

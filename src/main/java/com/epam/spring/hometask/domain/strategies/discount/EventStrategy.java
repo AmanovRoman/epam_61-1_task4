@@ -21,6 +21,7 @@ public class EventStrategy extends AbstractStrategy implements DiscountStrategy 
         super(discountValue, "Event discount");
     }
 
+    @Override
     public double calculate(User user, ScheduledEvents scheduler, int ticketsAmount, Ticket ticket) {
         Event event = eventService.getById(scheduler.getEventId());
         Event exact = eventService.getById(this.exactValue);
@@ -28,30 +29,19 @@ public class EventStrategy extends AbstractStrategy implements DiscountStrategy 
         return event.equals(exact) ? this.getDiscountValue() : -1.0D;
     }
 
+    @Override
     public String getDiscountTitle() {
         return this.getStrategyName();
     }
 
+    @Override
     public double getDiscountValue() {
         return super.getDiscountValue();
     }
 
+    @Override
     public User getLastUser() {
         return this.getUser();
     }
 
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        } else if (!(o instanceof EventStrategy)) {
-            return false;
-        } else {
-            EventStrategy that = (EventStrategy)o;
-            return this.getStrategyName().equals(that.getStrategyName());
-        }
-    }
-
-    public int hashCode() {
-        return Objects.hash(this.getStrategyName());
-    }
 }

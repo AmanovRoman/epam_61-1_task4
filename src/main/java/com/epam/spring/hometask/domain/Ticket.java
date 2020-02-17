@@ -76,7 +76,7 @@ public class Ticket extends DomainId {
     public void setDiscountValue(double discountValue) {
         this.discountValue = discountValue;
     }
-
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -87,11 +87,11 @@ public class Ticket extends DomainId {
             return this.getUserId() == ticket.getUserId() && this.getScheduledEventId() == ticket.getScheduledEventId() && this.getSeat() == ticket.getSeat();
         }
     }
-
+    @Override
     public int hashCode() {
         return Objects.hash(this.getUserId(), this.getScheduledEventId(), this.getSeat());
     }
-
+    @Override
     public String toString() {
         return "Ticket{ Id=" + this.getId() + ", userId=" + this.userId + ", scheduledEventId=" + this.scheduledEventId + ", seat=" + this.seat + ", price=" + this.price + ", discount='" + this.discount + '\'' + ", discountValue=" + this.discountValue + '}';
     }

@@ -11,9 +11,6 @@ public class DiscountInformation extends DomainId {
     private int userDiscountCounter;
     private String strategyName;
 
-    public DiscountInformation() {
-    }
-
     public int getUserId() {
         return this.userId;
     }

@@ -24,6 +24,7 @@ public class JdbcDiscountInfoDaoImpl extends DbConnector implements DiscountInfo
         super(dataSource);
     }
 
+    @Override
     public int save(DiscountInformation info) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("user_id", info.getUserId());
@@ -36,10 +37,12 @@ public class JdbcDiscountInfoDaoImpl extends DbConnector implements DiscountInfo
                 intValue();
     }
 
+    @Override
     public DiscountInformation remove(int id) {
         return null;
     }
 
+    @Override
     public DiscountInformation getById(int id) {
         String sql = "SELECT * FROM discount_information WHERE id = ?";
 
@@ -50,6 +53,7 @@ public class JdbcDiscountInfoDaoImpl extends DbConnector implements DiscountInfo
         }
     }
 
+    @Override
     public List<DiscountInformation> getAll() {
         String sql = "SELECT * FROM discount_information";
         try {
@@ -59,6 +63,7 @@ public class JdbcDiscountInfoDaoImpl extends DbConnector implements DiscountInfo
         }
     }
 
+    @Override
     public List<DiscountInformation> getByUserId(int userId) {
         String sql = "SELECT * FROM discount_information WHERE user_id = ?";
         try {
@@ -68,6 +73,7 @@ public class JdbcDiscountInfoDaoImpl extends DbConnector implements DiscountInfo
         }
     }
 
+    @Override
     public List<DiscountInformation> getByDiscountName(String name) {
         String sql = "SELECT * FROM discount_information WHERE discount_name LIKE ?";
         try {

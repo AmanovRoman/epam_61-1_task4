@@ -28,6 +28,7 @@ public class JdbcScheduleEventDaoImpl extends DbConnector implements ScheduleEve
         super(dataSource);
     }
 
+    @Override
     public int save(ScheduledEvents scheduled) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("event_id", scheduled.getEventId());
@@ -41,10 +42,12 @@ public class JdbcScheduleEventDaoImpl extends DbConnector implements ScheduleEve
                 intValue();
     }
 
+    @Override
     public ScheduledEvents remove(int id) {
         return null;
     }
 
+    @Override
     public ScheduledEvents getById(int id) {
         String sql = "SELECT * FROM scheduled_events WHERE scheduled_id = ?";
 
@@ -55,6 +58,7 @@ public class JdbcScheduleEventDaoImpl extends DbConnector implements ScheduleEve
         }
     }
 
+    @Override
     public List<ScheduledEvents> getAll() {
         String sql = "SELECT * FROM scheduled_events";
 

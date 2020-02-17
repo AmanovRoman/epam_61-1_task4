@@ -28,6 +28,7 @@ public class JdbcAuditoriumDaoImpl extends DbConnector implements AuditoriumDao 
         super(dataSource);
     }
 
+    @Override
     public int save(Auditorium auditorium) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name", auditorium.getName());
@@ -41,6 +42,7 @@ public class JdbcAuditoriumDaoImpl extends DbConnector implements AuditoriumDao 
                 intValue();
     }
 
+    @Override
     public List<Auditorium> getAll() {
         String sql = "SELECT * FROM auditorium";
         try {
@@ -48,6 +50,7 @@ public class JdbcAuditoriumDaoImpl extends DbConnector implements AuditoriumDao 
         } catch (Exception e) { return new ArrayList<>(); }
     }
 
+    @Override
     public Auditorium getById(int id) {
         String sql = "SELECT * FROM auditorium WHERE auditorium_id = ?";
         try {

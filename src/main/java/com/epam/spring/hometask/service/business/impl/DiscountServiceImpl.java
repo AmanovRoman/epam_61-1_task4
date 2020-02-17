@@ -21,6 +21,7 @@ public class DiscountServiceImpl implements DiscountServiceDao {
         this.strategies = strategies;
     }
 
+    @Override
     public DiscountStrategy getDiscount(User user, ScheduledEvents schedule, int numberOfTickets, Ticket ticket) {
         return strategies.
                 stream().

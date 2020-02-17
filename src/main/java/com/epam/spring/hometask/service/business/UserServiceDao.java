@@ -4,17 +4,17 @@ import com.epam.spring.hometask.domain.User;
 import java.util.List;
 
 public interface UserServiceDao {
-    User getUserByEmail(String var1);
+    User getUserByEmail(String email);
 
-    User getUserById(int var1);
+    User getUserById(int userId);
 
-    int addNewUser(String var1, String var2, String var3, int var4);
+    int addNewUser(String fName, String lName, String email, int userType);
 
-    int addNewUser(User var1);
+    int addNewUser(User user);
 
     List<User> getAllUsers();
 
-    void setUserBirthday(int var1, String var2);
+    void setUserBirthday(int userId, String date);
 
-    User deleteUserById(int var1);
+    User deleteUserById(int userId);
 }

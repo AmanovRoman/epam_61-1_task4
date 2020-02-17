@@ -1,4 +1,4 @@
-package com.epam.spring.hometask.application.shell;
+package com.epam.spring.hometask.application.view.shell;
 
 import com.epam.spring.hometask.domain.Ticket;
 import com.epam.spring.hometask.service.business.TicketServiceDao;

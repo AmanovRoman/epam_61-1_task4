@@ -8,25 +8,25 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ScheduledServiceDao {
-    int setNewEventSchedule(ScheduledEvents var1, UserType var2);
+    int setNewEventSchedule(ScheduledEvents scheduled, UserType userType);
 
-    int setNewEventSchedule(int var1, int var2, String var3, double var4, int var6);
+    int setNewEventSchedule(int eventId, int auditoriumId, String eventTime, double ticketPriceMultiplier, int userId);
 
-    int setNewEventSchedule(Event var1, Auditorium var2, LocalDateTime var3, double var4, UserType var6);
+    int setNewEventSchedule(Event event, Auditorium auditorium, LocalDateTime eventTime, double ticketPriceMultiplier, UserType userType);
 
-    List<ScheduledEvents> getScheduledByEventId(int var1);
+    List<ScheduledEvents> getScheduledByEventId(int eventId);
 
     List<ScheduledEvents> getAllScheduled();
 
-    List<ScheduledEvents> getScheduledByDate(LocalDateTime var1);
+    List<ScheduledEvents> getScheduledByDate(LocalDateTime dateTime);
 
-    ScheduledEvents getScheduledById(int var1);
+    ScheduledEvents getScheduledById(int id);
 
-    List<ScheduledEvents> getScheduledByAuditorium(int var1);
+    List<ScheduledEvents> getScheduledByAuditorium(int audId);
 
-    List<ScheduledEvents> filterByEventId(List<ScheduledEvents> var1, int var2);
+    List<ScheduledEvents> filterByEventId(List<ScheduledEvents> list, int eventId);
 
-    List<ScheduledEvents> filterByDate(List<ScheduledEvents> var1, LocalDateTime var2);
+    List<ScheduledEvents> filterByDate(List<ScheduledEvents> list, LocalDateTime dateTime);
 
-    List<ScheduledEvents> filterByAuditorium(List<ScheduledEvents> var1, int var2);
+    List<ScheduledEvents> filterByAuditorium(List<ScheduledEvents> list, int audId);
 }

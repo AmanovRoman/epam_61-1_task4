@@ -12,34 +12,21 @@ public class NoDiscountStrategy extends AbstractStrategy implements DiscountStra
         super(0.0D, "No discount");
     }
 
+    @Override
     public double calculate(User user, ScheduledEvents scheduler, int ticketsAmount, Ticket ticket) {
         return 0.0D;
     }
-
+    @Override
     public String getDiscountTitle() {
         return this.getStrategyName();
     }
-
+    @Override
     public double getDiscountValue() {
         return super.getDiscountValue();
     }
-
+    @Override
     public User getLastUser() {
         return this.getUser();
     }
 
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        } else if (!(o instanceof LuckyWinnerStrategy)) {
-            return false;
-        } else {
-            LuckyWinnerStrategy that = (LuckyWinnerStrategy)o;
-            return this.getStrategyName().equals(that.getStrategyName());
-        }
-    }
-
-    public int hashCode() {
-        return Objects.hash(this.getStrategyName());
-    }
 }

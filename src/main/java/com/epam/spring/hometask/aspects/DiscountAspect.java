@@ -21,9 +21,6 @@ public class DiscountAspect {
     @Autowired
     DiscountInfoServiceDao discountInfoService;
 
-    public DiscountAspect() {
-    }
-
     @Around("(execution( * *..*.setDiscount(..)))")
     public Object countDiscountInfo(ProceedingJoinPoint joinPoint) throws Throwable {
         DiscountStrategy strategy = (DiscountStrategy)joinPoint.getArgs()[0];

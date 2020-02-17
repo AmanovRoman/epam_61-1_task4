@@ -18,13 +18,12 @@ public class UserServiceDaoImpl implements UserServiceDao {
     @Autowired
     private ApplicationContext context;
 
-    public UserServiceDaoImpl() {
-    }
-
+    @Override
     public User getUserByEmail(String email) {
         return userDao.getUserByEmail(email);
     }
 
+    @Override
     public int addNewUser(String fName, String sName, String email, int userType) throws IllegalArgumentException {
         UserType type = UserType.values()[userType - 1];
         if (type == null) {
@@ -39,14 +38,17 @@ public class UserServiceDaoImpl implements UserServiceDao {
         }
     }
 
+    @Override
     public int addNewUser(User user) {
         return userDao.save(user);
     }
 
+    @Override
     public List<User> getAllUsers() {
         return userDao.getAll();
     }
 
+    @Override
     public void setUserBirthday(int userId, String birthday) throws IllegalArgumentException {
         LocalDate localDate = LocalDate.parse(birthday);
         User user = getUserById(userId);
@@ -58,10 +60,12 @@ public class UserServiceDaoImpl implements UserServiceDao {
         }
     }
 
+    @Override
     public User deleteUserById(int id) {
         return userDao.remove(id);
     }
 
+    @Override
     public User getUserById(int userId) {
         return userDao.getById(userId);
     }

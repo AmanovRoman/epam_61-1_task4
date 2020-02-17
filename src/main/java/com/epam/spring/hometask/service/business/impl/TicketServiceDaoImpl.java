@@ -40,6 +40,7 @@ public class TicketServiceDaoImpl implements TicketServiceDao {
         return ticket;
     }
 
+    @Override
     public List<Ticket> bookTickets(int scheduledId, int userId, Set<Integer> seats) {
         List<Ticket> tickets = new ArrayList<>();
         for (Integer seat : seats) {
@@ -49,22 +50,27 @@ public class TicketServiceDaoImpl implements TicketServiceDao {
         return tickets;
     }
 
+    @Override
     public Ticket getTicketById(int ticketId) {
         return ticketDao.getById(ticketId);
     }
 
+    @Override
     public List<Ticket> getAllSoldTickets() {
         return this.ticketDao.getAll();
     }
 
+    @Override
     public List<Ticket> filterTicketsByEvent(List<Ticket> tickets, int eventId) {
         return null;
     }
 
+    @Override
     public List<Ticket> filterTicketsByTime(List<Ticket> tickets, LocalDateTime dateTime) {
         return null;
     }
 
+    @Override
     public Ticket calculateTicketPrice(Ticket ticket, int ticketsAmount) {
         ScheduledEvents scheduled = ((ScheduledServiceDao) this.context.getBean("scheduledServiceDaoImpl")).
                 getScheduledById(ticket.getScheduledEventId());

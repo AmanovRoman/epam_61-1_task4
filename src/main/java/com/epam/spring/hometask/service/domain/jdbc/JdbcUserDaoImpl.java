@@ -27,6 +27,7 @@ public class JdbcUserDaoImpl extends DbConnector implements UserDao {
         super(dataSource);
     }
 
+    @Override
     public User getUserByEmail(String email) {
         String sql = "SELECT * FROM users WHERE email = ?";
 
@@ -37,6 +38,7 @@ public class JdbcUserDaoImpl extends DbConnector implements UserDao {
         }
     }
 
+    @Override
     public boolean update(User user) {
         String sql = "UPDATE users SET first_name=?, last_name=?, email=?, birthday=?, user_type=? WHERE user_id=?";
         return getConnection().
@@ -49,6 +51,7 @@ public class JdbcUserDaoImpl extends DbConnector implements UserDao {
                         user.getId()) > 0;
     }
 
+    @Override
     public int save(User user) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("first_name", user.getFirstName());
@@ -63,10 +66,12 @@ public class JdbcUserDaoImpl extends DbConnector implements UserDao {
                 intValue();
     }
 
+    @Override
     public User remove(int id) {
         return null;
     }
 
+    @Override
     public User getById(int id) {
         String sql = "SELECT * FROM users WHERE user_id = ?";
 
@@ -77,9 +82,9 @@ public class JdbcUserDaoImpl extends DbConnector implements UserDao {
         }
     }
 
+    @Override
     public List<User> getAll() {
         String sql = "SELECT * FROM users";
-
         try {
             return this.getConnection().query(sql, new JdbcUserDaoImpl.Mapper());
         } catch (Exception e) {

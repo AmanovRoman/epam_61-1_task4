@@ -21,19 +21,22 @@ public class EventServiceDaoImpl implements EventServiceDao {
     @Autowired
     private UserServiceDao userService;
 
-
+    @Override
     public Event getEventById(int eventId) {
         return eventDao.getById(eventId);
     }
 
+    @Override
     public Event getEventByName(String name) {
         return eventDao.getByName(name);
     }
 
+    @Override
     public List<Event> getAllEvents() {
         return eventDao.getAll();
     }
 
+    @Override
     public int addNewEvent(Event event, User user) throws IllegalArgumentException {
         try {
             if (UserType.values()[user.getUserType() - 1] != UserType.ADMIN) {
@@ -46,6 +49,7 @@ public class EventServiceDaoImpl implements EventServiceDao {
         return eventDao.save(event);
     }
 
+    @Override
     public int addNewEvent(String name, double basePrice, int eventRating, int userId) throws IllegalArgumentException {
         EventRating rating = EventRating.values()[eventRating - 1];
         if (name.length() >= 3 && rating != null) {

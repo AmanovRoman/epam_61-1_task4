@@ -13,7 +13,7 @@ public class RegisteredUserStrategy extends AbstractStrategy implements Discount
     public RegisteredUserStrategy(@Value("${discount.registeredUser.value}") double discountValue) {
         super(discountValue, "Registered user discount");
     }
-
+    @Override
     public double calculate(User user, ScheduledEvents scheduler, int ticketsAmount, Ticket ticket) {
         if (Objects.isNull(user)) {
             return -1.0D;
@@ -22,31 +22,17 @@ public class RegisteredUserStrategy extends AbstractStrategy implements Discount
             return this.getDiscountValue();
         }
     }
-
+    @Override
     public String getDiscountTitle() {
         return this.getStrategyName();
     }
-
+    @Override
     public double getDiscountValue() {
         return super.getDiscountValue();
     }
-
+    @Override
     public User getLastUser() {
         return this.getUser();
     }
 
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        } else if (!(o instanceof RegisteredUserStrategy)) {
-            return false;
-        } else {
-            RegisteredUserStrategy that = (RegisteredUserStrategy)o;
-            return this.getStrategyName().equals(that.getStrategyName());
-        }
-    }
-
-    public int hashCode() {
-        return Objects.hash(this.getStrategyName());
-    }
 }

@@ -18,6 +18,7 @@ public class BirthdayStrategy extends AbstractStrategy implements DiscountStrate
         super(discountValue, "Birthday discount");
     }
 
+    @Override
     public double calculate(User user, ScheduledEvents scheduler, int ticketsAmount, Ticket ticket) {
         if (Objects.isNull(user)) {
             return -1.0D;
@@ -35,30 +36,19 @@ public class BirthdayStrategy extends AbstractStrategy implements DiscountStrate
         }
     }
 
+    @Override
     public String getDiscountTitle() {
         return this.getStrategyName();
     }
 
+    @Override
     public double getDiscountValue() {
         return super.getDiscountValue();
     }
 
+    @Override
     public User getLastUser() {
         return this.getUser();
     }
 
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        } else if (!(o instanceof BirthdayStrategy)) {
-            return false;
-        } else {
-            BirthdayStrategy that = (BirthdayStrategy) o;
-            return this.getStrategyName().equals(that.getStrategyName());
-        }
-    }
-
-    public int hashCode() {
-        return Objects.hash(this.getStrategyName());
-    }
 }

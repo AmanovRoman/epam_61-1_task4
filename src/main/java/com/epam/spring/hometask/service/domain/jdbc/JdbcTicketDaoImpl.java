@@ -27,6 +27,7 @@ public class JdbcTicketDaoImpl extends DbConnector implements TicketDao {
         super(dataSource);
     }
 
+    @Override
     public int save(Ticket ticket) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("scheduled_id", ticket.getScheduledEventId());
@@ -42,10 +43,12 @@ public class JdbcTicketDaoImpl extends DbConnector implements TicketDao {
                 intValue();
     }
 
+    @Override
     public Ticket remove(int id) {
         return null;
     }
 
+    @Override
     public Ticket getById(int id) {
         String sql = "SELECT * FROM ticket WHERE ticket_id = ?";
         try {
@@ -55,6 +58,7 @@ public class JdbcTicketDaoImpl extends DbConnector implements TicketDao {
         }
     }
 
+    @Override
     public List<Ticket> getAll() {
         String sql = "SELECT * FROM ticket";
         try {

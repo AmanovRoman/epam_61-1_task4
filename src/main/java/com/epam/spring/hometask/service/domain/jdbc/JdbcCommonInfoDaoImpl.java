@@ -25,6 +25,7 @@ public class JdbcCommonInfoDaoImpl extends DbConnector implements CommonInfoDao 
         super(dataSource);
     }
 
+    @Override
     public CommonInformation getByEvent(int eventId) {
         String sql = "SELECT * FROM common_information WHERE event_id = ?";
         try {
@@ -35,11 +36,13 @@ public class JdbcCommonInfoDaoImpl extends DbConnector implements CommonInfoDao 
         }
     }
 
+    @Override
     public boolean update(CommonInformation info) {
         String sql = "UPDATE common_information SET accessed_by_name_counter=?, price_queried_counter=?, tickets_booked_counter=? WHERE id=?";
         return this.getConnection().update(sql, info.getAccessedByNameCounter(), info.getPriceQueriedCounter(), info.getTicketsBookedCounter(), info.getId()) > 0;
     }
 
+    @Override
     public int save(CommonInformation info) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("event_id", info.getEventId());
@@ -53,10 +56,12 @@ public class JdbcCommonInfoDaoImpl extends DbConnector implements CommonInfoDao 
                 intValue();
     }
 
+    @Override
     public CommonInformation remove(int id) {
         return null;
     }
 
+    @Override
     public CommonInformation getById(int id) {
         String sql = "SELECT * FROM common_information WHERE id = ?";
 
@@ -67,6 +72,7 @@ public class JdbcCommonInfoDaoImpl extends DbConnector implements CommonInfoDao 
         }
     }
 
+    @Override
     public List<CommonInformation> getAll() {
         String sql = "SELECT * FROM common_information";
         try {
@@ -77,7 +83,6 @@ public class JdbcCommonInfoDaoImpl extends DbConnector implements CommonInfoDao 
     }
 
     private class Mapper implements RowMapper<CommonInformation> {
-
         public CommonInformation mapRow(ResultSet resultSet, int i) throws SQLException {
             CommonInformation commonInfo = new CommonInformation();
             commonInfo.setId(resultSet.getInt("id"));

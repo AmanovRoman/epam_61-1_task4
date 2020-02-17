@@ -57,7 +57,7 @@ public class Auditorium extends DomainId {
     public double getVipSeatsMultiplier() {
         return this.vipSeatsMultiplier;
     }
-
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -71,11 +71,11 @@ public class Auditorium extends DomainId {
                     Objects.equals(this.getVipSeats(), that.getVipSeats());
         }
     }
-
+    @Override
     public int hashCode() {
         return Objects.hash(this.getName(), this.getNumberOfSeats(), this.getVipSeats(), this.getVipSeatsMultiplier());
     }
-
+    @Override
     public String toString() {
         return "Auditorium{id=" + this.getId() + ", name='" + this.name + '\'' + ", numberOfSeats=" + this.numberOfSeats + ", vipSeats=" + this.vipSeats + '}';
     }

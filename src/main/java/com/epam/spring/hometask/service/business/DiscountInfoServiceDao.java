@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public interface DiscountInfoServiceDao {
-    int saveInfo(DiscountInformation var1);
+
+    int saveInfo(DiscountInformation info);
 
     List<DiscountInformation> findByUserId(int var1);
 
@@ -19,5 +20,5 @@ public interface DiscountInfoServiceDao {
 
     int increaseCounter(DiscountInformation var1);
 
-    String getTextInfo(List<DiscountInformation> var1);
+    String getTextInfo();
 }

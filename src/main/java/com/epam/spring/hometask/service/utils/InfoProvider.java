@@ -3,22 +3,25 @@ package com.epam.spring.hometask.service.utils;
 import com.epam.spring.hometask.service.business.CommonInfoServiceDao;
 import com.epam.spring.hometask.service.business.DiscountInfoServiceDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class InfoProvider {
     @Autowired
-    static CommonInfoServiceDao commonInfoService;
+    CommonInfoServiceDao commonInfoService;
     @Autowired
-    static DiscountInfoServiceDao discountInfoService;
+    DiscountInfoServiceDao discountInfoService;
 
     public InfoProvider() {
     }
 
-    public static String getDiscountSummary() {
-        StringBuilder info = new StringBuilder("\nDISCOUNT USAGE SUMMARY:\n---------------------------------------\n");
-        return info.toString();
+    public String getDiscountSummary() {
+        return "\nDISCOUNT USAGE SUMMARY:\n---------------------------------------\n" +
+                discountInfoService.getTextInfo();
+
     }
 
-    public static String getCommonSummary() {
+    public String getCommonSummary() {
         return "\nEVENTS COMMON SUMMARY:\n---------------------------------------\n" +
                 commonInfoService.getTextInfo(commonInfoService.getAllCommonInformation());
     }

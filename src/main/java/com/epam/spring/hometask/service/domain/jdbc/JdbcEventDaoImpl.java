@@ -29,6 +29,7 @@ public class JdbcEventDaoImpl extends DbConnector implements EventDao {
         super(dataSource);
     }
 
+    @Override
     public Event getByName(String name) {
         String sql = "SELECT * FROM event WHERE name LIKE ? LIMIT 1";
 
@@ -39,6 +40,7 @@ public class JdbcEventDaoImpl extends DbConnector implements EventDao {
         }
     }
 
+    @Override
     public int save(Event event) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name", event.getName());
@@ -47,10 +49,12 @@ public class JdbcEventDaoImpl extends DbConnector implements EventDao {
         return this.simpleJdbcInsert.withTableName("event").usingGeneratedKeyColumns("event_id").executeAndReturnKey(parameters).intValue();
     }
 
+    @Override
     public Event remove(int id) {
         return null;
     }
 
+    @Override
     public Event getById(int id) {
         String sql = "SELECT * FROM event WHERE event_id = ?";
 
@@ -61,6 +65,7 @@ public class JdbcEventDaoImpl extends DbConnector implements EventDao {
         }
     }
 
+    @Override
     public List<Event> getAll() {
         String sql = "SELECT * FROM event";
 
@@ -72,7 +77,6 @@ public class JdbcEventDaoImpl extends DbConnector implements EventDao {
     }
 
     private class Mapper implements RowMapper<Event> {
-
         public Event mapRow(ResultSet resultSet, int i) throws SQLException {
             Event event = new Event();
             event.setId(resultSet.getInt("event_id"));

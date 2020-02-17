@@ -15,36 +15,22 @@ public class TicketsOverStrategy extends AbstractStrategy implements DiscountStr
     public TicketsOverStrategy(@Value("${discount.tickets.over.value}") double discountValue) {
         super(discountValue, "Mass tickets discount");
     }
-
+    @Override
     public double calculate(User user, ScheduledEvents scheduler, int ticketsAmount, Ticket ticket) {
         this.setUser(user);
         return ticketsAmount > this.everyOver ? this.getDiscountValue() : -1.0D;
     }
-
+    @Override
     public String getDiscountTitle() {
         return this.getStrategyName();
     }
-
+    @Override
     public double getDiscountValue() {
         return super.getDiscountValue();
     }
-
+    @Override
     public User getLastUser() {
         return this.getUser();
     }
 
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        } else if (!(o instanceof TicketsOverStrategy)) {
-            return false;
-        } else {
-            TicketsOverStrategy that = (TicketsOverStrategy)o;
-            return this.getStrategyName().equals(that.getStrategyName());
-        }
-    }
-
-    public int hashCode() {
-        return Objects.hash(this.getStrategyName());
-    }
 }

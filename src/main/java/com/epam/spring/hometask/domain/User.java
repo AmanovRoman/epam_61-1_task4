@@ -65,7 +65,7 @@ public class User extends DomainId {
     public void setUserType(int userType) {
         this.userType = userType;
     }
-
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -76,11 +76,11 @@ public class User extends DomainId {
             return this.getUserType() == user.getUserType() && Objects.equals(this.getFirstName(), user.getFirstName()) && Objects.equals(this.getLastName(), user.getLastName()) && Objects.equals(this.getEmail(), user.getEmail());
         }
     }
-
+    @Override
     public int hashCode() {
         return Objects.hash(this.getFirstName(), this.getLastName(), this.getEmail(), this.getUserType());
     }
-
+    @Override
     public String toString() {
         return "User{Id='" + this.getId() + ", firstName='" + this.firstName + '\'' + ", lastName='" + this.lastName + '\'' + ", email='" + this.email + '\'' + ", userType=" + UserType.values()[this.userType - 1] + ", birthday=" + this.birthDate + '}';
     }

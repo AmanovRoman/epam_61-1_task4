@@ -54,7 +54,7 @@ public class ScheduledEvents extends DomainId {
     public void setTicketPriceMultiplier(double ticketPriceMultiplier) {
         this.ticketPriceMultiplier = ticketPriceMultiplier;
     }
-
+    @Override
     public String toString() {
         return "ScheduledEvents{Id=" + this.getId() + ", eventId=" + this.eventId + ", auditoriumId=" + this.auditoriumId + ", eventTime=" + this.eventTime + ", ticketPriceMultiplier=" + this.ticketPriceMultiplier + '}';
     }
