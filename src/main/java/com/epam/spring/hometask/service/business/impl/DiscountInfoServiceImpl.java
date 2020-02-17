@@ -1,7 +1,9 @@
 package com.epam.spring.hometask.service.business.impl;
 
+import com.epam.spring.hometask.domain.User;
 import com.epam.spring.hometask.domain.information.DiscountInformation;
 import com.epam.spring.hometask.service.business.DiscountInfoServiceDao;
+import com.epam.spring.hometask.service.business.UserServiceDao;
 import com.epam.spring.hometask.service.domain.DiscountInfoDao;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Repository;
 public class DiscountInfoServiceImpl implements DiscountInfoServiceDao {
     @Autowired
     DiscountInfoDao discountInfo;
+    @Autowired
+    UserServiceDao userService;
 
     @Override
     public int saveInfo(DiscountInformation info) {
@@ -18,7 +22,7 @@ public class DiscountInfoServiceImpl implements DiscountInfoServiceDao {
     }
 
     @Override
-    public List<DiscountInformation> findByUserId(int userId) {
+    public List<DiscountInformation> findByUserId(Integer userId) {
         return discountInfo.getByUserId(userId);
     }
 
@@ -36,6 +40,19 @@ public class DiscountInfoServiceImpl implements DiscountInfoServiceDao {
 
     @Override
     public String getTextInfo() {
-        return null;
+        StringBuilder text = new StringBuilder();
+        discountInfo.getDiscountNames().forEach(discount -> {
+            text.append(discount[0]).append(" (total ").append(discount[1]).append(")").
+                    append("\n");
+            for (DiscountInformation discountInformation : discountInfo.getByDiscountName((String) discount[0])) {
+                User user = userService.getUserById(discountInformation.getUserId());
+                text.append("\t").
+                        append(user == null ? "Not registered user" : user.getFirstName()).
+                        append(" - ").
+                        append(discountInformation.getUserDiscountCounter()).append("\n");
+            }
+        });
+        return text.toString();
     }
+
 }

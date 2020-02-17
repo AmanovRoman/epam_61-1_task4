@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -21,7 +22,7 @@ import org.springframework.stereotype.Repository;
 @Primary
 public class JdbcScheduleEventDaoImpl extends DbConnector implements ScheduleEventDao {
     @Autowired
-    SimpleJdbcInsert simpleJdbcInsert;
+    ApplicationContext context;
 
     @Autowired
     public JdbcScheduleEventDaoImpl(DataSource dataSource) {
@@ -35,7 +36,7 @@ public class JdbcScheduleEventDaoImpl extends DbConnector implements ScheduleEve
         parameters.put("auditorium_id", scheduled.getAuditoriumId());
         parameters.put("event_time", Timestamp.valueOf(scheduled.getEventTime()));
         parameters.put("price_multiplier", scheduled.getTicketPriceMultiplier());
-        return simpleJdbcInsert.
+        return getNewSimpleJdbcInsert().
                 withTableName("scheduled_events").
                 usingGeneratedKeyColumns("scheduled_id").
                 executeAndReturnKey(parameters).
@@ -53,7 +54,7 @@ public class JdbcScheduleEventDaoImpl extends DbConnector implements ScheduleEve
 
         try {
             return this.getConnection().queryForObject(sql, new Object[]{id}, new Mapper());
-        } catch (Exception var4) {
+        } catch (Exception e) {
             return null;
         }
     }
@@ -64,7 +65,7 @@ public class JdbcScheduleEventDaoImpl extends DbConnector implements ScheduleEve
 
         try {
             return this.getConnection().query(sql, new Mapper());
-        } catch (Exception var3) {
+        } catch (Exception e) {
             return new ArrayList<>();
         }
     }
@@ -75,7 +76,7 @@ public class JdbcScheduleEventDaoImpl extends DbConnector implements ScheduleEve
             scheduled.setId(resultSet.getInt("scheduled_id"));
             scheduled.setEventId(resultSet.getInt("event_id"));
             scheduled.setAuditoriumId(resultSet.getInt("auditorium_id"));
-            scheduled.setTicketPriceMultiplier((double)resultSet.getInt("price_multiplier"));
+            scheduled.setTicketPriceMultiplier(resultSet.getDouble("price_multiplier"));
             Timestamp dateTime = resultSet.getTimestamp("event_time");
             scheduled.setEventTime(dateTime == null ? null : dateTime.toLocalDateTime());
             return scheduled;

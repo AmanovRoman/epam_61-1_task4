@@ -8,17 +8,16 @@ public interface DiscountInfoServiceDao {
 
     int saveInfo(DiscountInformation info);
 
-    List<DiscountInformation> findByUserId(int var1);
+    List<DiscountInformation> findByUserId(Integer userId);
 
-    List<DiscountInformation> findByStrategyName(String var1);
+    List<DiscountInformation> findByStrategyName(String discount);
 
     default DiscountInformation filterByStrategyName(List<DiscountInformation> list, String name) {
-        return (DiscountInformation)list.stream().filter((discountInfo) -> {
-            return discountInfo.getStrategyName().equals(name);
-        }).findFirst().orElse(null);
+        return list.stream().filter((discountInfo) -> discountInfo.getStrategyName().equals(name)).findFirst().orElse(null);
     }
 
-    int increaseCounter(DiscountInformation var1);
+    int increaseCounter(DiscountInformation info);
 
     String getTextInfo();
+
 }

@@ -39,7 +39,9 @@ public class Auditorium extends DomainId {
     }
 
     public void setVipSeats(String seats) {
-        this.vipSeats = Arrays.stream(seats.split(",")).map(Integer::parseInt).collect(Collectors.toSet());
+        String [] ints = seats.replace("[", "").replace("]", "").split("[, ]+");
+        Set<Integer> set = Arrays.stream(ints).map(Integer::parseInt).collect(Collectors.toSet());
+        this.vipSeats = set;
     }
 
     public void setVipSeatsMultiplier(double vipSeatsMultiplier) {

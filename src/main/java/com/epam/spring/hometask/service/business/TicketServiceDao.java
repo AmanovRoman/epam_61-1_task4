@@ -48,7 +48,7 @@ public interface TicketServiceDao {
     }
 
     default double getTicketsTotalCost(List<Ticket> tickets) {
-        return tickets.stream().mapToDouble(Ticket::getPrice).sum();
+        return round(tickets.stream().mapToDouble(Ticket::getPrice).sum(), 2);
     }
 
     Ticket calculateTicketPrice(Ticket ticket, int ticketsAmount);

@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Notes:
  * Use Spring-shell`s 'auto' command for prefill automatically DB
  * Use Spring-shell`s 'clear all' command for delete all data from DB
+ * Use Spring-shell`s 'info event' & 'info discount' commands for see information
  * Use Spring-shell`s 'help' command for examine all available shell methods
  */
 
@@ -33,6 +34,7 @@ public class MovieTheaterManager {
                         " * Notes:\n" +
                         " * Use Spring-shell`s 'auto' command for prefill DB automatically\n" +
                         " * Use Spring-shell`s 'clear all' command for delete all data from DB\n" +
+                        " * Use Spring-shell`s 'info event' & 'info discount' commands for see information" +
                         " * Use Spring-shell`s 'help' command for examine all available shell methods"
         );
         SpringApplication.run(MovieTheaterManager.class, args);

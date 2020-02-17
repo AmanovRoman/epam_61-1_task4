@@ -68,17 +68,19 @@ public class CommonCommands {
         System.out.println("\nEVENTS:\n----------------------------------------");
         eventService.addNewEvent("The Hobbit", 11, 3, 1);
         eventService.addNewEvent("Spring is coming", 5.28, 3, 1);
+        eventService.getEventByName("The Hobbit");
         eventService.getAllEvents().forEach(System.out::println);
 
         System.out.println("\nSCHEDULED EVENTS:\n----------------------------------------");
-        scheduledService.setNewEventSchedule(1, 1, "2020-01-01 20:10", 1.5, 2);
-        scheduledService.setNewEventSchedule(1, 2, "2020-01-02 20:10", 1.9, 2);
+        scheduledService.setNewEventSchedule(1, 1, "2020-01-01 20:10", 1.5, 1);
+        scheduledService.setNewEventSchedule(1, 2, "2020-01-02 20:10", 1.9, 1);
+        scheduledService.setNewEventSchedule(2, 2, "2020-01-03 20:10", 1.9, 1);
         scheduledService.getAllScheduled().forEach(System.out::println);
 
         System.out.println("\nTICKETS:\n----------------------------------------");
         List<Ticket> tickets = ticketService.bookTickets(1, 0, new HashSet<>(Arrays.asList(1, 3, 5, 7)));
         List<Ticket> tickets2 = ticketService.bookTickets(2, 1, new HashSet<>(Arrays.asList(1, 2, 3, 10, 15, 20)));
-        List<Ticket> tickets3 = ticketService.bookTickets(2, 2, new HashSet<>(Arrays.asList(8, 13, 14)));
+        List<Ticket> tickets3 = ticketService.bookTickets(3, 2, new HashSet<>(Arrays.asList(8, 13, 14)));
         ticketService.getAllSoldTickets().forEach(System.out::println);
         System.out.println("\nTOTAL COST (User 1): " + ticketService.getTicketsTotalCost(tickets));
         System.out.println("TOTAL COST (User 2): " + ticketService.getTicketsTotalCost(tickets2));

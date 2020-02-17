@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -19,9 +20,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Primary
 public class JdbcAuditoriumDaoImpl extends DbConnector implements AuditoriumDao {
-
-    @Autowired
-    SimpleJdbcInsert simpleJdbcInsert;
 
     @Autowired
     public JdbcAuditoriumDaoImpl(DataSource dataSource) {
@@ -35,7 +33,7 @@ public class JdbcAuditoriumDaoImpl extends DbConnector implements AuditoriumDao 
         parameters.put("number_of_seats", auditorium.getNumberOfSeats());
         parameters.put("vip_multiplier", auditorium.getVipSeatsMultiplier());
         parameters.put("vip_seats", auditorium.getVipSeats().toString());
-        return simpleJdbcInsert.
+        return getNewSimpleJdbcInsert().
                 withTableName("auditorium").
                 usingGeneratedKeyColumns("auditorium_id").
                 executeAndReturnKey(parameters).
@@ -46,7 +44,7 @@ public class JdbcAuditoriumDaoImpl extends DbConnector implements AuditoriumDao 
     public List<Auditorium> getAll() {
         String sql = "SELECT * FROM auditorium";
         try {
-            return this.getConnection().query(sql, new Mapper());
+            return getConnection().query(sql, new Mapper());
         } catch (Exception e) { return new ArrayList<>(); }
     }
 
@@ -63,6 +61,7 @@ public class JdbcAuditoriumDaoImpl extends DbConnector implements AuditoriumDao 
             Auditorium auditorium = new Auditorium();
             auditorium.setId(resultSet.getInt("auditorium_id"));
             auditorium.setName(resultSet.getString("name"));
+            auditorium.setNumberOfSeats(resultSet.getInt("number_of_seats"));
             auditorium.setVipSeatsMultiplier(resultSet.getDouble("vip_multiplier"));
             auditorium.setVipSeats(resultSet.getString("vip_seats"));
             return auditorium;

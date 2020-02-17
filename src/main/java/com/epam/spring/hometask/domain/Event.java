@@ -33,6 +33,10 @@ public class Event extends DomainId {
         return this.basePrice;
     }
 
+    public double getTicketBasePrice() {
+        return this.basePrice;
+    }
+
     public void setBasePrice(double basePrice) {
         this.basePrice = basePrice;
     }
@@ -44,25 +48,27 @@ public class Event extends DomainId {
     public void setRating(EventRating rating) {
         this.rating = rating.getValue();
     }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        } else if (!(o instanceof Event)) {
-            return false;
-        } else {
-            Event event = (Event)o;
-            return Double.compare(event.getBasePrice(), this.getBasePrice()) == 0 &&
-                    this.getRating() == event.getRating() &&
-                    Objects.equals(this.getName(), event.getName());
-        }
+        if (this == o) return true;
+        if (!(o instanceof Event)) return false;
+        Event event = (Event) o;
+        return Double.compare(event.getBasePrice(), getBasePrice()) == 0 &&
+                getRating() == event.getRating() &&
+                Objects.equals(getName(), event.getName());
     }
+
     @Override
     public int hashCode() {
-        return Objects.hash(this.getName(), this.getBasePrice(), this.getRating());
+        return Objects.hash(getName(), getBasePrice(), getRating());
     }
+
     @Override
     public String toString() {
-        return "Event{ id=" + this.getId() + ", name='" + this.name + '\'' + ", basePrice=" + this.basePrice + ", rating=" + EventRating.values()[this.rating - 1] + '}';
+        return "Event{ id=" + getId() +
+                ", name='" + name +
+                ", basePrice=" + basePrice +
+                ", rating=" + EventRating.values()[this.rating - 1] + '}';
     }
 }

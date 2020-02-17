@@ -22,7 +22,7 @@ import org.springframework.stereotype.Repository;
 @Primary
 public class JdbcEventDaoImpl extends DbConnector implements EventDao {
     @Autowired
-    SimpleJdbcInsert simpleJdbcInsert;
+    ApplicationContext context;
 
     @Autowired
     public JdbcEventDaoImpl(DataSource dataSource) {
@@ -46,7 +46,11 @@ public class JdbcEventDaoImpl extends DbConnector implements EventDao {
         parameters.put("name", event.getName());
         parameters.put("base_price", event.getBasePrice());
         parameters.put("rating", event.getRating());
-        return this.simpleJdbcInsert.withTableName("event").usingGeneratedKeyColumns("event_id").executeAndReturnKey(parameters).intValue();
+        return getNewSimpleJdbcInsert().
+                withTableName("event").
+                usingGeneratedKeyColumns("event_id").
+                executeAndReturnKey(parameters).
+                intValue();
     }
 
     @Override

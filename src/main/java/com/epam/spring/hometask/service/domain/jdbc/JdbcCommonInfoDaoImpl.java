@@ -11,14 +11,13 @@ import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class JdbcCommonInfoDaoImpl extends DbConnector implements CommonInfoDao {
-    @Autowired
-    SimpleJdbcInsert simpleJdbcInsert;
 
     @Autowired
     public JdbcCommonInfoDaoImpl(DataSource dataSource) {
@@ -38,8 +37,13 @@ public class JdbcCommonInfoDaoImpl extends DbConnector implements CommonInfoDao 
 
     @Override
     public boolean update(CommonInformation info) {
-        String sql = "UPDATE common_information SET accessed_by_name_counter=?, price_queried_counter=?, tickets_booked_counter=? WHERE id=?";
-        return this.getConnection().update(sql, info.getAccessedByNameCounter(), info.getPriceQueriedCounter(), info.getTicketsBookedCounter(), info.getId()) > 0;
+        String sql = "UPDATE common_information SET event_id=?, accessed_by_name_counter=?, price_queried_counter=?, tickets_booked_counter=? WHERE id=?";
+        return this.getConnection().update(sql,
+                info.getEventId(),
+                info.getAccessedByNameCounter(),
+                info.getPriceQueriedCounter(),
+                info.getTicketsBookedCounter(),
+                info.getId()) > 0;
     }
 
     @Override
@@ -49,7 +53,7 @@ public class JdbcCommonInfoDaoImpl extends DbConnector implements CommonInfoDao 
         parameters.put("accessed_by_name_counter", info.getAccessedByNameCounter());
         parameters.put("price_queried_counter", info.getPriceQueriedCounter());
         parameters.put("tickets_booked_counter", info.getTicketsBookedCounter());
-        return simpleJdbcInsert.
+        return getNewSimpleJdbcInsert().
                 withTableName("common_information").
                 usingGeneratedKeyColumns("id").
                 executeAndReturnKey(parameters).

@@ -12,6 +12,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Aspect
 @Component
 @Order(2)
@@ -21,16 +23,24 @@ public class DiscountAspect {
     @Autowired
     DiscountInfoServiceDao discountInfoService;
 
-    @Around("(execution( * *..*.setDiscount(..)))")
+    @Around("(execution( * *..*.setDiscount(com.epam.spring.hometask.domain.strategies.discount.DiscountStrategy)))")
     public Object countDiscountInfo(ProceedingJoinPoint joinPoint) throws Throwable {
-        DiscountStrategy strategy = (DiscountStrategy)joinPoint.getArgs()[0];
+        DiscountStrategy strategy = (DiscountStrategy) joinPoint.getArgs()[0];
         User user = strategy.getLastUser();
-        DiscountInformation info = discountInfoService.filterByStrategyName(discountInfoService.findByUserId(user.getId()), strategy.getDiscountTitle());
+        List<DiscountInformation> infoList = discountInfoService.findByUserId((user != null) ? user.getId() : 0);
+        DiscountInformation info = null;
+
+        if (infoList.size() > 0)
+            info = discountInfoService.filterByStrategyName(infoList, strategy.getDiscountTitle());
+
         if (info == null) {
-            info = (DiscountInformation)context.getBean("discountInformation");
+            info = (DiscountInformation) context.getBean("discountInformation");
+            info.setUserId((user==null)?0:user.getId());
+            info.setStrategyName(strategy.getDiscountTitle());
+            info.setId(discountInfoService.saveInfo(info));
         }
 
-        this.discountInfoService.increaseCounter(info);
+        discountInfoService.increaseCounter(info);
         return joinPoint.proceed();
     }
 }

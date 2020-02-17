@@ -35,19 +35,20 @@ public class CounterAspect {
     public void countEventAccess(Event retVal) {
         if (retVal != null) {
             CommonInformation info = getInfo(retVal);
-            this.commonInfoService.increaseAccessedByName(info);
+            commonInfoService.increaseAccessedByName(info);
         }
     }
 
-    @Around("execution(* *.getBasePrice(..))")
+
+    @Around("execution(* *.getTicketBasePrice(..))")
     public Object countPriceQuery(ProceedingJoinPoint joinPoint) throws Throwable {
         Object o = joinPoint.proceed();
         Event event = (Event) joinPoint.getThis();
         CommonInformation info = getInfo(event);
-        this.commonInfoService.increasePriceQueried(info);
+        commonInfoService.increasePriceQueried(info);
         return o;
     }
-
+/**/
     @AfterReturning(
             value = "execution(* *.bookTickets(..)))",
             returning = "retVal"
@@ -59,17 +60,20 @@ public class CounterAspect {
                             ticket.getScheduledEventId()).getEventId());
             if (event != null) {
                 CommonInformation info = getInfo(event);
-                this.commonInfoService.increaseTicketBooked(info);
+                commonInfoService.increaseTicketBooked(info);
             }
         });
-    }
+    } /**/
 
     private CommonInformation getInfo(Event event) {
         CommonInformation info = commonInfoService.findByEventId(event.getId());
         if (info == null) {
             info = (CommonInformation) context.getBean("commonInformation");
             info.setEventId(event.getId());
-            this.commonInfoService.saveInfo(info);
+            info.setTicketsBookedCounter(0);
+            info.setAccessedByNameCounter(0);
+            info.setPriceQueriedCounter(0);
+            info.setId(commonInfoService.saveInfo(info));
         }
         return info;
     }

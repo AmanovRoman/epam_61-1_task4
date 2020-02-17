@@ -13,34 +13,33 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class AuditoriumServiceDaoImpl implements AuditoriumServiceDao {
-    @Autowired
-    ApplicationContext context;
+
     @Autowired
     AuditoriumDao auditoriumDao;
 
     @Override
     public Auditorium getAuditoriumById(int id) {
-        return this.auditoriumDao.getById(id);
+        return auditoriumDao.getById(id);
     }
 
     @Override
     public List<Auditorium> getAllAuditoriums() {
-        return this.auditoriumDao.getAll();
+        return auditoriumDao.getAll();
     }
 
     @Override
     public Set<Integer> getSeats(int audId, List<Integer> seats) {
-        Auditorium auditorium = this.auditoriumDao.getById(audId);
+        Auditorium auditorium = auditoriumDao.getById(audId);
         return seats.stream().filter(seat -> seat <= auditorium.getNumberOfSeats() && seat > 0 ).collect(Collectors.toSet());
     }
 
     @Override
     public int addNewAuditorium(String name, Integer numberOfSeats, Set<Integer> vipSeats, Double vipSeatsMultiplier) {
-        return this.auditoriumDao.save(new Auditorium(name, numberOfSeats, vipSeats, vipSeatsMultiplier));
+        return auditoriumDao.save(new Auditorium(name, numberOfSeats, vipSeats, vipSeatsMultiplier));
     }
 
     @Override
     public int addNewAuditorium(Auditorium auditorium) {
-        return this.auditoriumDao.save(auditorium);
+        return auditoriumDao.save(auditorium);
     }
 }

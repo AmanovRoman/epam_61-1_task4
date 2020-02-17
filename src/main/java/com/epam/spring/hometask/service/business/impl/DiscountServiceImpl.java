@@ -26,6 +26,8 @@ public class DiscountServiceImpl implements DiscountServiceDao {
         return strategies.
                 stream().
                 filter(strategy -> strategy.getDiscountValue() < 100.0D).
-                max(Comparator.comparingDouble((o) -> o.calculate(user, schedule, numberOfTickets, ticket))).get();
+                max(Comparator.comparingDouble(
+                        o -> o.calculate(user, schedule, numberOfTickets, ticket))
+                ).get();
     }
 }

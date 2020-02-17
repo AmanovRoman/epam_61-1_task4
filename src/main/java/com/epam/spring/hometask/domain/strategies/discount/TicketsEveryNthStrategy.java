@@ -18,7 +18,7 @@ public class TicketsEveryNthStrategy extends AbstractStrategy implements Discoun
     }
     @Override
     public double calculate(User user, ScheduledEvents scheduler, int ticketsAmount, Ticket ticket) {
-        this.setUser(user);
+        setUser(user);
         return ticket.getId() % this.condition == 0 ? this.getDiscountValue() : -1.0D;
     }
     @Override

@@ -2,6 +2,7 @@ package com.epam.spring.hometask.service.business.impl;
 
 import com.epam.spring.hometask.domain.information.CommonInformation;
 import com.epam.spring.hometask.service.business.CommonInfoServiceDao;
+import com.epam.spring.hometask.service.business.EventServiceDao;
 import com.epam.spring.hometask.service.domain.CommonInfoDao;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ import org.springframework.stereotype.Repository;
 public class CommonInfoServiceImpl implements CommonInfoServiceDao {
     @Autowired
     CommonInfoDao commonInfo;
+
+    @Autowired
+    EventServiceDao eventService;
 
     @Override
     public int saveInfo(CommonInformation info) {
@@ -26,7 +30,8 @@ public class CommonInfoServiceImpl implements CommonInfoServiceDao {
 
     @Override
     public int increaseAccessedByName(CommonInformation info) {
-        info.setAccessedByNameCounter(info.getAccessedByNameCounter() + 1);
+        int counter = info.getAccessedByNameCounter() + 1;
+        info.setAccessedByNameCounter(counter);
         commonInfo.update(info);
         return info.getAccessedByNameCounter();
     }
@@ -52,6 +57,15 @@ public class CommonInfoServiceImpl implements CommonInfoServiceDao {
 
     @Override
     public String getTextInfo(List<CommonInformation> list) {
-        return null;
+        StringBuilder text = new StringBuilder();
+        getAllCommonInformation().forEach(info ->  {
+
+            text.append("Event '").append(eventService.getEventById(info.getEventId()).getName()).
+                    append("'\n");
+            text.append("\tEvent access by name count: ").append(info.getAccessedByNameCounter()).append("\n");
+            text.append("\tEvent price queried count: ").append(info.getPriceQueriedCounter()).append("\n");
+            text.append("\tEvent booked tickets count: ").append(info.getTicketsBookedCounter()).append("\n");
+        });
+        return text.toString();
     }
 }

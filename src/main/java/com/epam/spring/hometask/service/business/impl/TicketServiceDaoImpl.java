@@ -23,22 +23,16 @@ public class TicketServiceDaoImpl implements TicketServiceDao {
     @Autowired
     private TicketDao ticketDao;
 
-    private Ticket bookTicket(Integer userId, int scheduledId, int seat, int ticketsAmount) {
-        User user = ((UserServiceDao) context.getBean("userServiceDaoImpl")).
-                getUserById(userId);
+    @Autowired
+    UserServiceDao userServiceDao;
 
-        ScheduledEvents scheduled = ((ScheduledServiceDao) context.getBean("scheduledServiceDaoImpl")).
-                getScheduledById(scheduledId);
+    @Autowired ScheduledServiceDao scheduledService;
 
-        if (scheduled == null) return null;
-        Ticket ticket = (Ticket) context.getBean("ticket");
-        ticket.setUserId((user == null) ? 0 : user.getId());
-        ticket.setSeat(seat);
-        ticket.setScheduledEventId(scheduled.getId());
-        calculateTicketPrice(ticket, ticketsAmount);
-        ticketDao.save(ticket);
-        return ticket;
-    }
+    @Autowired EventServiceDao eventService;
+
+    @Autowired AuditoriumServiceDao auditoriumService;
+
+    @Autowired DiscountServiceDao discountService;
 
     @Override
     public List<Ticket> bookTickets(int scheduledId, int userId, Set<Integer> seats) {
@@ -70,34 +64,41 @@ public class TicketServiceDaoImpl implements TicketServiceDao {
         return null;
     }
 
+    private Ticket bookTicket(Integer userId, int scheduledId, int seat, int ticketsAmount) {
+        User user = userServiceDao.getUserById(userId);
+        ScheduledEvents scheduled = scheduledService.getScheduledById(scheduledId);
+        if (scheduled == null) return null;
+        Ticket ticket = (Ticket) context.getBean("ticket");
+        ticket.setUserId((user == null) ? 0 : user.getId());
+        ticket.setSeat(seat);
+        ticket.setScheduledEventId(scheduled.getId());
+        ticket.setId(ticketDao.save(ticket));
+        calculateTicketPrice(ticket, ticketsAmount);
+        ticketDao.update(ticket);
+        return ticket;
+    }
+
     @Override
     public Ticket calculateTicketPrice(Ticket ticket, int ticketsAmount) {
-        ScheduledEvents scheduled = ((ScheduledServiceDao) this.context.getBean("scheduledServiceDaoImpl")).
-                getScheduledById(ticket.getScheduledEventId());
-
-        Auditorium auditorium = ((AuditoriumServiceDao) this.context.getBean("auditoriumServiceDaoImpl")).
-                getAuditoriumById(scheduled.getAuditoriumId());
-
-        Event event = ((EventServiceDao) this.context.getBean("eventServiceDaoImpl")).
-                getEventById(scheduled.getEventId());
-
-        User user = ((UserServiceDao) this.context.getBean("userServiceDaoImpl")).
-                getUserById(ticket.getUserId());
+        ScheduledEvents scheduled = scheduledService.getScheduledById(ticket.getScheduledEventId());
+        Auditorium auditorium = auditoriumService.getAuditoriumById(scheduled.getAuditoriumId());
+        Event event = eventService.getEventById(scheduled.getEventId());
+        User user = userServiceDao.getUserById(ticket.getUserId());
 
         if (isNull(scheduled) || isNull(auditorium) || isNull(event))
             throw new IllegalArgumentException();
 
         double vipMultiplier = (auditorium.getVipSeats().contains(ticket.getSeat())) ? auditorium.getVipSeatsMultiplier() : 1;
-        DiscountServiceDao discountService = (DiscountServiceDao) context.getBean("discountServiceImpl");
         DiscountStrategy discount = discountService.getDiscount(user, scheduled, ticketsAmount, ticket);
         double maxDiscount = 0;
+
         if (Objects.nonNull(discount)) {
             maxDiscount = discount.calculate(user, scheduled, ticketsAmount, ticket);
             ticket.setDiscount(discount);
             ticket.setDiscountValue(maxDiscount);
         }
 
-        ticket.setPrice(round((event.getBasePrice() * scheduled.getTicketPriceMultiplier() * vipMultiplier) * ((100 - maxDiscount) / 100), 2));
+        ticket.setPrice(round((event.getTicketBasePrice() * scheduled.getTicketPriceMultiplier() * vipMultiplier) * ((100 - maxDiscount) / 100), 2));
         return ticket;
     }
 }

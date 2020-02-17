@@ -30,6 +30,7 @@ public class CommonConfiguration {
     }
 
     @Bean
+    @Scope("prototype")
     SimpleJdbcInsert simpleJdbcInsert(@Autowired DataSource dataSource) {
         return new SimpleJdbcInsert(dataSource);
     }

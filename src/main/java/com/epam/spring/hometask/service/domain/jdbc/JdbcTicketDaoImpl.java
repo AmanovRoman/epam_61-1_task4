@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -19,8 +20,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Primary
 public class JdbcTicketDaoImpl extends DbConnector implements TicketDao {
-    @Autowired
-    SimpleJdbcInsert simpleJdbcInsert;
 
     @Autowired
     public JdbcTicketDaoImpl(DataSource dataSource) {
@@ -36,7 +35,7 @@ public class JdbcTicketDaoImpl extends DbConnector implements TicketDao {
         parameters.put("price", ticket.getPrice());
         parameters.put("discount", ticket.getDiscount());
         parameters.put("discount_value", ticket.getDiscountValue());
-        return simpleJdbcInsert.
+        return getNewSimpleJdbcInsert().
                 withTableName("ticket").
                 usingGeneratedKeyColumns("ticket_id").
                 executeAndReturnKey(parameters).
@@ -53,7 +52,7 @@ public class JdbcTicketDaoImpl extends DbConnector implements TicketDao {
         String sql = "SELECT * FROM ticket WHERE ticket_id = ?";
         try {
             return this.getConnection().queryForObject(sql, new Object[]{id}, new Mapper());
-        } catch (Exception var4) {
+        } catch (Exception e) {
             return null;
         }
     }
@@ -62,10 +61,23 @@ public class JdbcTicketDaoImpl extends DbConnector implements TicketDao {
     public List<Ticket> getAll() {
         String sql = "SELECT * FROM ticket";
         try {
-            return this.getConnection().query(sql, new Mapper());
-        } catch (Exception var3) {
+            return getConnection().query(sql, new Mapper());
+        } catch (Exception e) {
             return new ArrayList<>();
         }
+    }
+
+    @Override
+    public void update(Ticket ticket) {
+        String sql = "UPDATE ticket SET scheduled_id = ?, user_id = ?, seat = ?, price = ?, discount = ?, discount_value = ? WHERE ticket_id=?";
+        getConnection().update(sql,
+                ticket.getScheduledEventId(),
+                ticket.getUserId(),
+                ticket.getSeat(),
+                ticket.getPrice(),
+                ticket.getDiscount(),
+                ticket.getDiscountValue(),
+                ticket.getId());
     }
 
     private class Mapper implements RowMapper<Ticket> {

@@ -4,17 +4,17 @@ import com.epam.spring.hometask.domain.information.CommonInformation;
 import java.util.List;
 
 public interface CommonInfoServiceDao {
-    int saveInfo(CommonInformation var1);
+    int saveInfo(CommonInformation info);
 
-    CommonInformation findByEventId(int var1);
+    CommonInformation findByEventId(int eventId);
 
-    int increaseAccessedByName(CommonInformation var1);
+    int increaseAccessedByName(CommonInformation info);
 
-    int increasePriceQueried(CommonInformation var1);
+    int increasePriceQueried(CommonInformation info);
 
-    int increaseTicketBooked(CommonInformation var1);
+    int increaseTicketBooked(CommonInformation info);
 
     List<CommonInformation> getAllCommonInformation();
 
-    String getTextInfo(List<CommonInformation> var1);
+    String getTextInfo(List<CommonInformation> info);
 }
