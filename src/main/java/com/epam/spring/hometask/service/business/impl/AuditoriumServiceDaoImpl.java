@@ -3,15 +3,14 @@ package com.epam.spring.hometask.service.business.impl;
 import com.epam.spring.hometask.domain.Auditorium;
 import com.epam.spring.hometask.service.business.AuditoriumServiceDao;
 import com.epam.spring.hometask.service.domain.AuditoriumDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Repository;
 
-@Repository
+@Service
 public class AuditoriumServiceDaoImpl implements AuditoriumServiceDao {
 
     @Autowired
@@ -30,7 +29,7 @@ public class AuditoriumServiceDaoImpl implements AuditoriumServiceDao {
     @Override
     public Set<Integer> getSeats(int audId, List<Integer> seats) {
         Auditorium auditorium = auditoriumDao.getById(audId);
-        return seats.stream().filter(seat -> seat <= auditorium.getNumberOfSeats() && seat > 0 ).collect(Collectors.toSet());
+        return seats.stream().filter(seat -> seat <= auditorium.getNumberOfSeats() && seat > 0).collect(Collectors.toSet());
     }
 
     @Override

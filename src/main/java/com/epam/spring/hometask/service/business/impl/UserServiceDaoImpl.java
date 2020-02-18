@@ -4,14 +4,15 @@ import com.epam.spring.hometask.domain.User;
 import com.epam.spring.hometask.domain.enums.UserType;
 import com.epam.spring.hometask.service.business.UserServiceDao;
 import com.epam.spring.hometask.service.domain.UserDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Repository;
 
-@Repository
+@Service
 public class UserServiceDaoImpl implements UserServiceDao {
     @Autowired
     private UserDao userDao;
@@ -29,7 +30,7 @@ public class UserServiceDaoImpl implements UserServiceDao {
         if (type == null) {
             throw new IllegalArgumentException("Wrong user type");
         } else {
-            User user = (User)context.getBean("user");
+            User user = (User) context.getBean("user");
             user.setFirstName(fName);
             user.setLastName(sName);
             user.setEmail(email);

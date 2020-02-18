@@ -7,12 +7,13 @@ import com.epam.spring.hometask.domain.enums.UserType;
 import com.epam.spring.hometask.service.business.EventServiceDao;
 import com.epam.spring.hometask.service.business.UserServiceDao;
 import com.epam.spring.hometask.service.domain.EventDao;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-@Repository
+import java.util.List;
+
+@Service
 public class EventServiceDaoImpl implements EventServiceDao {
     @Autowired
     private EventDao eventDao;
@@ -53,7 +54,7 @@ public class EventServiceDaoImpl implements EventServiceDao {
     public int addNewEvent(String name, double basePrice, int eventRating, int userId) throws IllegalArgumentException {
         EventRating rating = EventRating.values()[eventRating - 1];
         if (name.length() >= 3 && rating != null) {
-            Event event = (Event)this.context.getBean("event");
+            Event event = (Event) this.context.getBean("event");
             event.setName(name);
             event.setBasePrice(basePrice);
             event.setRating(rating);

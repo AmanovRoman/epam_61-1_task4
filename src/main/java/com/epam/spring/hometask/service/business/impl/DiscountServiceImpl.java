@@ -5,14 +5,13 @@ import com.epam.spring.hometask.domain.Ticket;
 import com.epam.spring.hometask.domain.User;
 import com.epam.spring.hometask.domain.strategies.discount.DiscountStrategy;
 import com.epam.spring.hometask.service.business.DiscountServiceDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.function.ToDoubleFunction;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
-@Repository
+@Service
 public class DiscountServiceImpl implements DiscountServiceDao {
     private List<DiscountStrategy> strategies;
 
