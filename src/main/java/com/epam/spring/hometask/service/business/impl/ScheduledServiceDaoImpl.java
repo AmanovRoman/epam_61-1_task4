@@ -10,16 +10,16 @@ import com.epam.spring.hometask.service.business.EventServiceDao;
 import com.epam.spring.hometask.service.business.ScheduledServiceDao;
 import com.epam.spring.hometask.service.business.UserServiceDao;
 import com.epam.spring.hometask.service.domain.ScheduleEventDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Repository;
 
-@Repository
+@Service
 public class ScheduledServiceDaoImpl implements ScheduledServiceDao {
     @Autowired
     ApplicationContext context;
@@ -55,7 +55,7 @@ public class ScheduledServiceDaoImpl implements ScheduledServiceDao {
 
     @Override
     public int setNewEventSchedule(Event event, Auditorium auditorium, LocalDateTime eventTime, double ticketPriceMultiplier, UserType userType) throws NullPointerException {
-        ScheduledEvents scheduled = (ScheduledEvents)context.getBean("scheduledEvents");
+        ScheduledEvents scheduled = (ScheduledEvents) context.getBean("scheduledEvents");
         scheduled.setEventId(event.getId());
         scheduled.setAuditoriumId(auditorium.getId());
         scheduled.setEventTime(eventTime);

@@ -6,7 +6,7 @@ import com.epam.spring.hometask.service.business.*;
 import com.epam.spring.hometask.service.domain.TicketDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.Set;
 
 import static java.util.Objects.isNull;
 
-@Repository
+@Service
 public class TicketServiceDaoImpl implements TicketServiceDao {
     @Autowired
     private ApplicationContext context;
@@ -26,13 +26,17 @@ public class TicketServiceDaoImpl implements TicketServiceDao {
     @Autowired
     UserServiceDao userServiceDao;
 
-    @Autowired ScheduledServiceDao scheduledService;
+    @Autowired
+    ScheduledServiceDao scheduledService;
 
-    @Autowired EventServiceDao eventService;
+    @Autowired
+    EventServiceDao eventService;
 
-    @Autowired AuditoriumServiceDao auditoriumService;
+    @Autowired
+    AuditoriumServiceDao auditoriumService;
 
-    @Autowired DiscountServiceDao discountService;
+    @Autowired
+    DiscountServiceDao discountService;
 
     @Override
     public List<Ticket> bookTickets(int scheduledId, int userId, Set<Integer> seats) {
