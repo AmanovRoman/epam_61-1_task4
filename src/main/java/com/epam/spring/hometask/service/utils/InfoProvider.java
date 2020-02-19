@@ -1,17 +1,16 @@
 package com.epam.spring.hometask.service.utils;
 
-import com.epam.spring.hometask.service.business.CommonInfoServiceDao;
-import com.epam.spring.hometask.service.business.DiscountInfoServiceDao;
+import com.epam.spring.hometask.service.CommonInfoService;
+import com.epam.spring.hometask.service.DiscountInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
 public class InfoProvider {
     @Autowired
-    CommonInfoServiceDao commonInfoService;
+    CommonInfoService commonInfoService;
     @Autowired
-    DiscountInfoServiceDao discountInfoService;
+    DiscountInfoService discountInfoService;
 
     public InfoProvider() {
     }

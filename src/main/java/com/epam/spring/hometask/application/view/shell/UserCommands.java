@@ -1,9 +1,6 @@
 package com.epam.spring.hometask.application.view.shell;
 
-import com.epam.spring.hometask.service.business.UserServiceDao;
-import java.io.PrintStream;
-import java.util.List;
-import java.util.function.Consumer;
+import com.epam.spring.hometask.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -11,7 +8,7 @@ import org.springframework.shell.standard.ShellMethod;
 @ShellComponent
 public class UserCommands {
     @Autowired
-    UserServiceDao userService;
+    UserService userService;
 
     @ShellMethod(
             value = "Show whole users list",

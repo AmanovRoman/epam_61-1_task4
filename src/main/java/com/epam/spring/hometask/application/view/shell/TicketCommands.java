@@ -1,7 +1,7 @@
 package com.epam.spring.hometask.application.view.shell;
 
 import com.epam.spring.hometask.domain.Ticket;
-import com.epam.spring.hometask.service.business.TicketServiceDao;
+import com.epam.spring.hometask.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class TicketCommands {
 
     @Autowired
-    TicketServiceDao ticketService;
+    TicketService ticketService;
 
     @ShellMethod(value = "Show whole tickets list", key = "tickets")
     public void showTickets() {

@@ -1,11 +1,8 @@
 package com.epam.spring.hometask.application.view.shell;
 
 import com.epam.spring.hometask.domain.Event;
-import com.epam.spring.hometask.service.business.EventServiceDao;
-import com.epam.spring.hometask.service.business.ScheduledServiceDao;
-import java.io.PrintStream;
-import java.util.List;
-import java.util.function.Consumer;
+import com.epam.spring.hometask.service.EventService;
+import com.epam.spring.hometask.service.ScheduledService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -13,9 +10,9 @@ import org.springframework.shell.standard.ShellMethod;
 @ShellComponent
 public class EventsCommands {
     @Autowired
-    EventServiceDao eventService;
+    EventService eventService;
     @Autowired
-    ScheduledServiceDao scheduledService;
+    ScheduledService scheduledService;
 
     @ShellMethod(
             value = "Show whole events list",
