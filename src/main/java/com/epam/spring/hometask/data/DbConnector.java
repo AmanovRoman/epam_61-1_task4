@@ -15,18 +15,16 @@ public class DbConnector {
     @Autowired
     ApplicationContext context;
 
-    private JdbcTemplate jdbcTemplate;
+    @Autowired
+    DataSource dataSource;
 
-    protected JdbcTemplate getConnection() {
+    private JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+
+    public JdbcTemplate getConnection() {
         return this.jdbcTemplate;
     }
 
-    @Autowired
-    public DbConnector(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
-
-    protected SimpleJdbcInsert getNewSimpleJdbcInsert() {
+    public SimpleJdbcInsert getNewSimpleJdbcInsert() {
         return  (SimpleJdbcInsert) context.getBean("simpleJdbcInsert");
     }
 

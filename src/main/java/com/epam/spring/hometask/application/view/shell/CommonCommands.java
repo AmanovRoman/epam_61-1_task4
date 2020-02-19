@@ -1,9 +1,9 @@
 package com.epam.spring.hometask.application.view.shell;
 
 import com.epam.spring.hometask.domain.Ticket;
-import com.epam.spring.hometask.service.business.*;
-import com.epam.spring.hometask.service.domain.AuditoriumDao;
-import com.epam.spring.hometask.service.domain.DataCleanerDao;
+import com.epam.spring.hometask.service.*;
+import com.epam.spring.hometask.dao.AuditoriumDao;
+import com.epam.spring.hometask.dao.DataCleanerDao;
 import com.epam.spring.hometask.service.utils.InfoProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -27,22 +27,22 @@ public class CommonCommands {
     ApplicationContext context;
 
     @Autowired
-    private UserServiceDao userService;
+    private UserService userService;
 
     @Autowired
-    private EventServiceDao eventService;
+    private EventService eventService;
 
     @Autowired
-    private ScheduledServiceDao scheduledService;
+    private ScheduledService scheduledService;
 
     @Autowired
-    private AuditoriumServiceDao auditoriumService;
+    private AuditoriumService auditoriumService;
 
     @Autowired
     private AuditoriumDao auditoriumDao;
 
     @Autowired
-    private TicketServiceDao ticketService;
+    private TicketService ticketService;
 
     @Autowired
     private InfoProvider infoProvider;

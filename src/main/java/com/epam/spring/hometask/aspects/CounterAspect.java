@@ -3,9 +3,9 @@ package com.epam.spring.hometask.aspects;
 import com.epam.spring.hometask.domain.Event;
 import com.epam.spring.hometask.domain.Ticket;
 import com.epam.spring.hometask.domain.information.CommonInformation;
-import com.epam.spring.hometask.service.business.CommonInfoServiceDao;
-import com.epam.spring.hometask.service.business.EventServiceDao;
-import com.epam.spring.hometask.service.business.ScheduledServiceDao;
+import com.epam.spring.hometask.service.CommonInfoService;
+import com.epam.spring.hometask.service.EventService;
+import com.epam.spring.hometask.service.ScheduledService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
@@ -22,11 +22,11 @@ public class CounterAspect {
     @Autowired
     ApplicationContext context;
     @Autowired
-    ScheduledServiceDao scheduledService;
+    ScheduledService scheduledService;
     @Autowired
-    EventServiceDao eventService;
+    EventService eventService;
     @Autowired
-    CommonInfoServiceDao commonInfoService;
+    CommonInfoService commonInfoService;
 
     @AfterReturning(
             value = "execution(* *.getEventByName(..))",
